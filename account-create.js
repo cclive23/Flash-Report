@@ -10,14 +10,19 @@ signupRadio.addEventListener('change', () => {
   formContainer.style.transform = 'translateX(-50%)';
 });
 
-// Create an object to store registered users with their roles
-const registeredUsers = {
+// Initialize users from localStorage or use default admin
+const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || {
   'cyusaclive24@fr.com': {
     password: 'Goat2302#',
     role: 'admin',
     name: 'Clive'
   }
 };
+
+// Save users to localStorage whenever updated
+function saveUsers() {
+  localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+}
 
 // Function to check if email is a potential admin email
 function isPotentialAdminEmail(email) {
@@ -31,13 +36,24 @@ document.querySelector('form.login').addEventListener('submit', function(event) 
   const email = this.querySelector('input[type="text"]').value;
   const password = this.querySelector('input[type="password"]').value;
   
+  console.log('Login attempt:', email); // Debug logging
+  
   if (registeredUsers[email] && registeredUsers[email].password === password) {
-    // Store user role and name in sessionStorage
+    console.log('Login successful for:', email); // Debug logging
+    
+    // Store user info in sessionStorage
     sessionStorage.setItem('userRole', registeredUsers[email].role);
     sessionStorage.setItem('userName', registeredUsers[email].name);
-    // Successful login
-    window.location.href = 'user.html';
+    sessionStorage.setItem('userEmail', email);
+    
+    // Redirect based on role
+    if (registeredUsers[email].role === 'admin') {
+      window.location.href = 'admin.html';
+    } else {
+      window.location.href = 'user.html';
+    }
   } else {
+    console.log('Login failed for:', email); // Debug logging
     alert('Invalid credentials. Please sign up if you don\'t have an account.');
   }
 });
@@ -61,31 +77,23 @@ document.querySelector('form.signup').addEventListener('submit', function(event)
     return;
   }
 
-  // Check if email is a potential admin email
-  if (isPotentialAdminEmail(email)) {
-    // Add new user with admin role
-    registeredUsers[email] = {
-      password: password,
-      role: 'admin',
-      name: fullName
-    };
-    alert('Admin account registration successful! Please login with your credentials.');
-  } else {
-    // Add new user with user role
-    registeredUsers[email] = {
-      password: password,
-      role: 'user',
-      name: fullName
-    };
-    alert('User account registration successful! Please login with your credentials.');
-  }
+  // Add new user with appropriate role
+  registeredUsers[email] = {
+    password: password,
+    role: isPotentialAdminEmail(email) ? 'admin' : 'user',
+    name: fullName
+  };
   
+  // Save to localStorage
+  saveUsers();
+
   // Store user info in sessionStorage
   sessionStorage.setItem('userName', fullName);
+  sessionStorage.setItem('userEmail', email);
   sessionStorage.setItem('userRole', registeredUsers[email].role);
-  
-  // Redirect to user page after successful signup
-  window.location.href = 'user.html';
+
+  // Redirect based on role
+  window.location.href = registeredUsers[email].role === 'admin' ? 'admin.html' : 'user.html';
 });
 
 document.getElementById('view-records-btn').addEventListener('click', function() {
@@ -98,9 +106,11 @@ document.getElementById('view-records-btn').addEventListener('click', function()
   `;
 });
 
+// Update logout to clear both sessionStorage and localStorage
 document.querySelector('.side-menu li.logout').addEventListener('click', function() {
-    if (confirm('Are you sure you want to logout?')) {
-        window.location.href = 'index.html';
-    }
+  if (confirm('Are you sure you want to logout?')) {
+    sessionStorage.clear();
+    window.location.href = 'index.html';
+  }
 });
 

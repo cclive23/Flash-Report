@@ -30,31 +30,31 @@ sideMenu.addEventListener('click', (event) => {
     event.stopPropagation(); // Prevent click from propagating to the document
 });
 
-// Function to load and display records
+// Function to load records for the current user
 function loadRecords() {
     const records = JSON.parse(localStorage.getItem('records') || '[]');
+    const userEmail = sessionStorage.getItem('userEmail');
     const tbody = document.querySelector('.records-table tbody');
     const tableContainer = document.querySelector('.table-container');
+    
+    console.log('All records:', records); // Debug logging
+    console.log('Current user:', userEmail); // Debug logging
     
     // Clear existing records
     tbody.innerHTML = '';
     
-    // Remove existing message if it exists
-    const existingMessage = tableContainer.querySelector('.empty-table-message');
-    if (existingMessage) {
-        existingMessage.remove();
-    }
+    // Filter records for current user
+    const userRecords = records.filter(record => record.userEmail === userEmail);
+    console.log('User records:', userRecords); // Debug logging
     
-    if (records.length === 0) {
-        // Create and append the empty message
+    if (userRecords.length === 0) {
         const emptyMessage = document.createElement('div');
         emptyMessage.className = 'empty-table-message';
         emptyMessage.textContent = 'No records created yet';
         tableContainer.appendChild(emptyMessage);
         emptyMessage.style.display = 'block';
     } else {
-        // Populate table with records
-        records.forEach(record => {
+        userRecords.forEach(record => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>${record.recordNo}</td>
@@ -70,8 +70,31 @@ function loadRecords() {
 
 // Load records when the page loads
 document.addEventListener('DOMContentLoaded', () => {
+    const userEmail = sessionStorage.getItem('userEmail');
+    const userName = sessionStorage.getItem('userName');
+    const userRole = sessionStorage.getItem('userRole');
+    
+    // Redirect if not logged in
+    if (!userEmail || !userName) {
+        alert('Please log in to access this page.');
+        window.location.href = 'account.html';
+        return;
+    }
+    
+    // Redirect admin to admin page
+    if (userRole === 'admin') {
+        window.location.href = 'admin.html';
+        return;
+    }
+    
+    // Update welcome message
+    const welcomeMessage = document.querySelector('.welcome-bar h2');
+    if (welcomeMessage) {
+        welcomeMessage.textContent = `Hello, ${userName}`;
+    }
+    
+    // Load user's records
     loadRecords();
-    // ... rest of your existing DOMContentLoaded code ...
 });
 
 // Update the edit record functionality
@@ -258,9 +281,11 @@ document.querySelector('.location-display').addEventListener('click', function(e
 
 // Add click handler for create record button
 document.querySelector('.create-record').addEventListener('click', function(e) {
-    if (!isLocationCopied) {
-        e.preventDefault(); // Prevent navigation
-        alert('Please copy your current location first by clicking the coordinates. This information will be needed for creating a new record.');
+    const userRole = sessionStorage.getItem('userRole');
+    if (userRole !== 'user' && userRole !== 'admin') {
+        e.preventDefault();
+        alert('Please log in to create a record.');
+        window.location.href = 'account.html';
     }
 });
 
@@ -280,6 +305,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // Add logout functionality
 document.querySelector('.side-menu li.logout').addEventListener('click', function() {
     if (confirm('Are you sure you want to logout?')) {
+        // Clear session data
+        sessionStorage.clear();
         window.location.href = 'index.html';
     }
 });
