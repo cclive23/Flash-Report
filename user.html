@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="user.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+</head>
+<body>
+  <div class="animated-background"></div>
+
+    <!-- Side menu -->
+    <div class="side-menu">
+        <ul>
+            <li><i class="fas fa-user"></i> Account</li>
+            <li><i class="fas fa-cog"></i> Setting</li>
+            <li><i class="fas fa-envelope"></i> Contact</li>
+            <li><i class="fas fa-question-circle"></i> Help</li>
+            <li class="logout"><i class="fas fa-sign-out-alt"></i> Logout</li>
+        </ul>
+    </div>
+
+    <!-- Navigation bar -->
+    <nav class="welcome-bar">
+        <div class="hamburger-menu">
+            <div class="one"></div>
+            <div class="two"></div>
+            <div class="three"></div>
+        </div>
+        <h2>Hello, Clive</h2>
+        <div class="logo"><h2>Flash Report</h2></div>
+    </nav>
+
+    <div class="search-bar">
+        <i class="fa-solid fa-location-dot"></i>
+        <span class="location-display">Loading location...</span>
+        <h3>Record History</h3>
+        <div class="search-container">
+          <div class="fas fa-search"></div>
+            <input type="text" placeholder="Record Number">
+            <button type="Submit">Submit</button>
+        </div>
+    </div>
+    <div class="content-container">
+      <div class="buttons">
+        <div class="create-record">
+          <a href="createPage.html">
+              <i class="fas fa-plus"></i> Create a Record
+          </a>
+        </div>
+         <!-- Edit Record Button -->
+        <div class="edit-record">
+          <a href="">
+              <i class="fas fa-edit"></i> Edit a Record
+          </a>
+        </div>
+      </div>
+      <div class="table-container">
+          <table class="records-table">
+              <thead>
+                  <tr>
+                      <th>Record No.</th>
+                      <th>Title</th>
+                      <th>Geolocation</th>
+                      <th>Type</th>
+                      <th>Status</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <!-- Records will be dynamically loaded here -->
+              </tbody>
+          </table>
+      </div>
+  </div>
+  
+
+    <script src="user.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlashReport - Login / Signup</title>
+  <link rel="stylesheet" href="account-create.css">
+</head>
+<body>
+
+
+
+
+<div class="container">
+  
+
+  <div class="wrapper">
+    <div class="title-text">
+      <div class="title login">Flash Report </div>
+      <div class="title signup">Signup Form</div>
+    </div>
+    <div class="form-container">
+      <div class="slide-controls">
+        <input type="radio" name="slide" id="login" checked>
+        <input type="radio" name="slide" id="signup">
+        <label for="login" class="slide login">Login</label>
+        <label for="signup" class="slide signup">Sign up</label>
+        <div class="slider-tab"></div>
+      </div>
+      <div class="form-inner">
+        <!-- Login Form -->
+        <form action="user.html" method="get" class="login">
+          <div class="field">
+            <input type="text" placeholder="Email Address" required>
+          </div>
+          <div class="field">
+            <input type="password" placeholder="Password" required>
+          </div>
+          <div class="pass-link"><a href="#">Forgot password?</a></div>
+          <div class="field btn">
+            <div class="btn-layer"></div>
+            <input type="submit" value="Login">
+          </div>
+          <div class="signup-link">Create an account <a href="#" data-form="signup">Sign up</a></div>
+        </form>
+        <!-- Signup Form -->
+        <form action="user.html" method="get" class="signup">
+          <div class="field">
+            <input type="text" placeholder="Full Name" required>
+          </div>
+          <div class="field">
+            <input type="email" placeholder="Email Address" required>
+          </div>
+          <div class="field">
+            <input type="password" placeholder="Create Password" required>
+          </div>
+          <div class="field">
+            <input type="password" placeholder="Confirm Password" required>
+          </div>
+          <div class="field btn">
+            <div class="btn-layer"></div>
+            <input type="submit" value="Sign up">
+          </div>
+          <div class="signup-link">Already have an account? <a href="#" data-form="login">Login</a></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Javascript link -->
+<script src="account-create.js"></script>
+</body>
+</html>

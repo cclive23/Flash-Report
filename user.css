@@ -1,0 +1,626 @@
+.animated-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(-45deg, #000000, #1a1a1a, #002347, #997300);
+    z-index: -9999;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.logo {
+    margin-left: auto; /* Push the logo to the far right */
+    margin-right: 30px; /* Add space between the logo and the border */
+    font-size: 24px; /* Adjust font size */
+    animation: pulse 3s infinite ease-in-out; /* Apply the animation */
+}
+
+/* Keyframe animation for pulsing effect and color change */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        color: #ffd700 !important;
+    }
+    50% {
+        transform: scale(1.1);
+        color: #ffeb3b !important;
+    }
+}
+
+.logo h2 {
+    color: #ffd700 !important;
+    margin: 0; /* Remove default h2 margins */
+}
+
+.welcome-bar .logo h2 {
+    color: #ffd700 !important;
+}
+
+.search-bar {
+position: fixed;
+top: 100px;
+left: 0;
+width: 100%;
+background-color: black;
+color: #ccc;
+padding: 15px 40px;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+z-index: 998;
+font-size: 20px;
+display: flex;
+justify-content: flex-end; /* Move contents to the right */
+align-items: center; /* Align items vertically centered */
+gap: 290px; 
+box-sizing: border-box; /* Ensure padding is included in width calculation */
+overflow-x: hidden; /* Hide any horizontal overflow */
+white-space: nowrap; /* Prevent text wrapping */
+}
+
+.search-container {
+    display: flex; /* Align items in a row */
+    align-items: center; /* Vertically align the elements */
+    max-width: 100%; /* Prevent the container from exceeding the search bar width */
+    gap: 1px; /* Space between elements */
+    flex-wrap: nowrap; /* Prevent wrapping */
+}
+
+
+.search-container .fa-search {
+    font-size: 18px; /* Adjust icon size */
+    color: #ccc; /* Match text color for cohesion */
+    margin-right: 10px; /* Add spacing between icon and input field */
+}
+
+.search-container input {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #003366; /* Border with a matching color */
+    max-width: 300px; /* Limit input width */
+    flex: 1; /* Allow input to grow or shrink as needed */
+    box-sizing: border-box; /* Include padding in width calculation */
+    background-color: #1f1f1f; /* Dark background to match the scheme */
+    color: #ccc; /* Light text color for the input */
+}
+
+.search-container input::placeholder {
+    color: #ccc; /* Placeholder text color to match the scheme */
+}
+
+.search-container button {
+    padding: 8px 12px;
+    background: -webkit-linear-gradient(left, #003366, #004080, #0059b3, #0073e6); /* Gradient style */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-container button:hover {
+    background: -webkit-linear-gradient(left, #00264d, #003366, #004080, #0059b3); /* Darker gradient on hover */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Add subtle shadow */
+}
+
+
+.search-bar h3 {
+margin: 0; /* Remove default margin of h3 */
+white-space: nowrap; /* Prevent text wrapping */
+flex-shrink: 0; /* Prevent the text from shrinking */
+}
+
+
+
+
+
+
+/* Menu bar initially hidden */
+.side-menu {
+position: fixed;
+width: 200px; /* Menu width */
+height: 100%; /* Full viewport height */
+left: -250px;
+text-align: center;
+top:50px;
+color:white;
+padding: 20px;
+box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+transition: left 0.3s ease; /* Smooth transition */
+z-index: 999; /* Ensure it stays on top of other elements */
+background-color: #1f1f1f;
+
+}
+
+.side-menu.active {
+left: 0; /* Slide into view */
+}
+
+/* Style for menu items with border and spacing */
+.side-menu ul {
+list-style: none;
+padding: 0;
+margin: 10px 10pxxl;
+}
+
+.side-menu li {
+margin: 50px 40px; /* Increase vertical spacing */
+font-size: 20px;
+top: 50px;
+
+cursor: pointer;
+padding: 5px; /* Add padding for better spacing inside */
+border: 2px solid transparent; /* Initial border style */
+border-radius: 20px; /* Rounded corners */
+transition: all 0.3s ease; /* Smooth border transition */
+}
+
+.side-menu li:hover {
+border-color: #ffd700; /* Border color on hover */
+background-color: #333; /* Slightly lighter background on hover */
+transform: scale(1.05); /* Slight scaling effect */
+}
+
+
+/* Hamburger menu */
+.hamburger-menu div {
+height: 4px;
+
+background-color: white;
+margin: 5px 0;
+border-radius: 25px;
+transition: 0.3s ease;
+
+}
+
+.hamburger-menu:hover div {
+width: 30px;
+background-color: #ffd700;
+}
+
+/* Welcome bar styling */
+.welcome-bar {
+display: flex;
+align-items: center; /* Vertically align elements */
+gap: 20px; /* Space between hamburger and text */
+padding: 20px 20px;
+background-color: black;
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+z-index: 1000; /* Ensure it's above content */
+}
+
+.welcome-bar h2 {
+margin: 0;
+color: white;
+}
+
+/* Ensure body has no margin */
+body {
+margin: 0;
+font-family: Arial, sans-serif;
+}
+
+
+
+.one{
+width:30px;
+}
+.two{
+width:20px;
+}
+.three{
+width:25px;
+}
+
+/* Content container holds both buttons and the table */
+.content-container {
+    display: flex; /* Side-by-side layout */
+    justify-content: flex-start; /* Align items to the left */
+    align-items: flex-start; /* Align items at the top */
+    gap: 40px; /* Space between buttons and table */
+    margin-top: 140px; /* Adjust spacing from the search bar */
+    padding: 20px; /* Padding around the container */
+    box-sizing: border-box;
+}
+
+
+/* Buttons container for vertical alignment */
+.buttons {
+    display: flex; /* Stack buttons vertically */
+    flex-direction: column;
+    gap: 20px; /* Space between the buttons */
+    align-items: flex-start; /* Align buttons to the start */
+    
+}
+
+
+
+
+
+
+/*Create table*/
+.create-record{
+    position: relative;
+    display: flex;
+    margin:50px 0 0;
+    align-items: center;
+    width:200%;
+    font-size: 18px; /* Adjust font size */
+    padding: 10px 15px; /* Add some padding for spacing */
+    background: -webkit-linear-gradient(left, #003366, #004080, #0059b3, #0073e6);
+    color: white; /* Text color */
+    text-decoration: none; /* Remove underline from link */
+    border-radius: 8px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+
+
+.create-record a {
+    color: white; /* Text color within the link */
+    text-decoration: none;
+}
+
+.create-record i {
+    margin-right: 8px; /* Add space between icon and text */
+}
+
+.create-record:hover, .edit-record:hover {
+    background: -webkit-linear-gradient(left, #00264d, #003366, #004080, #0059b3); /* Darker gradient */
+    transform: scale(1.05); /* Slightly enlarge the button */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Add a subtle shadow for emphasis */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease; /* Smooth animation */
+}
+
+
+.edit-record {
+    background: -webkit-linear-gradient(left, #003366, #004080, #0059b3, #0073e6);
+    width: 195%;
+    font-size: 18px;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.edit-record a {
+    color: white;
+    text-decoration: none;
+}
+.edit-record i{
+    margin-right: 8px;
+}
+
+.edit-record a:visited {
+    color: white;
+}
+
+.edit-record:hover {
+    background: -webkit-linear-gradient(left, #00264d, #003366, #004080, #0059b3);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+
+
+/* Table container styling */
+.table-container {
+    position: relative;
+    margin: 30px 0 0 auto;
+    width: 60%;
+    text-align: right;
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: flex-end; /* Align items to the right */
+    padding-right: 20px;
+    transition: transform 0.5s ease-in-out;
+}
+
+
+.table-container.moved{
+    transform: translateX(30px);
+}
+
+/* Table styling */
+.records-table {
+    width: 100%; /* Full width within its container */
+    border-collapse: collapse; /* Ensure borders are neat */
+    background-color: #1f1f1f; /* Dark background */
+    color: #fff; /* White text for contrast */
+}
+
+/* Table Header */
+.records-table th {
+    background-color: #003366; /* Dark blue background for header */
+    color: #ffd700; /* Gold text for contrast */
+    padding: 12px; /* Padding for better spacing */
+    text-align: left; /* Align to the left */
+}
+
+/* Table body rows */
+.records-table tbody tr {
+    background-color: #1f1f1f; /* Dark background for rows */
+    color: #fff; /* White text for readability */
+    transition: background-color 0.3s ease; /* Transition for row hover */
+}
+
+.records-table tbody tr:hover {
+    background-color: #003366; /* Dark blue background on hover */
+}
+
+.records-table th, 
+.records-table td {
+    border: 1px solid #003366; /* Border with matching dark color */
+    padding: 12px; /* Padding inside each cell */
+}
+
+/* Alternating row background color */
+.records-table tbody tr:nth-child(even) {
+    background-color: #00264d; /* Slightly different dark shade for alternating rows */
+}
+
+.records-table td .three-dots {
+    display: inline-block;   /* Ensures it's inline with other content */
+    cursor: pointer;        /* Pointer cursor on hover */
+    font-size: 20px;         /* Set font size */
+    color: #ffd700;          /* Gold color for the three-dot icon */
+    transition: color 0.3s ease, transform 0.3s ease; /* Transition for hover effect */
+}
+
+.records-table td .three-dots:hover {
+    color: #fff;             /* Change to white on hover */
+    transform: scale(1.2);   /* Slightly increase size on hover */
+}
+
+/* Style for the Edit button (optional, for visual feedback) */
+.edit-record {
+    padding: 10px 20px;
+    background-color: #003366; /* Dark blue background */
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease; /* Smooth transition for hover */
+}
+
+.edit-record:hover {
+    background-color: #00264d; /* Slightly darker blue when hovered */
+}
+
+
+
+
+
+/* Action buttons container */
+.action-buttons {
+display: flex;
+gap: 10px; /* Spacing between buttons */
+justify-content: flex-end; /* Align buttons to the right */
+}
+
+/* Button styling */
+.edit-button, .delete-button {
+border: none;
+background: transparent;
+cursor: pointer;
+padding: 5px 10px;
+font-size: 16px;
+color: #000;
+transition: transform 0.2s ease;
+}
+
+.edit-button:hover {
+color: #007bff; /* Blue for edit on hover */
+transform: scale(1.1);
+}
+
+.delete-button:hover {
+color: #dc3545; /* Red for delete on hover */
+transform: scale(1.1);
+}
+
+.location-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ccc;
+    font-size: 18px;
+    margin-right: 5px;
+    min-width: 160px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.location-display i {
+    color: #ccc;
+    font-size: 16px;
+}
+
+.location-display span {
+    white-space: nowrap;
+    display: inline-block; /* Keep text together */
+}
+
+.location-display:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.location-display.copied::after {
+    content: 'Copied!';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #1f1f1f;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    opacity: 0;
+    animation: fadeOut 1s forwards;
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    70% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.fa-location-dot {
+    color: #ccc;
+    font-size: 16px;
+    display: inline-block; /* Ensure icon is properly displayed */
+}
+
+/* Update the highlight styles */
+.records-table tbody tr.highlight-red {
+    background-color: rgba(255, 0, 0, 0.3) !important; /* Semi-transparent red */
+    transition: background-color 0.3s ease;
+}
+
+.records-table tbody tr.highlight-green {
+    background-color: rgba(0, 255, 0, 0.3) !important; /* Semi-transparent green */
+    transition: background-color 0.3s ease;
+}
+
+/* Ensure the highlights show even on hover */
+.records-table tbody tr.highlight-red:hover {
+    background-color: rgba(255, 0, 0, 0.4) !important;
+}
+
+.records-table tbody tr.highlight-green:hover {
+    background-color: rgba(0, 255, 0, 0.4) !important;
+}
+
+/* Add styles for the dots container */
+.dots-container {
+    position: absolute;
+    left: -40px; /* Increased space for dots */
+    width: 40px;
+    height: 100%;
+    display: none;
+    pointer-events: all; /* Enable interactions */
+}
+
+/* Show dots container when table is moved */
+.table-container.moved .dots-container {
+    display: block;
+}
+
+.dots-wrapper {
+    position: absolute;
+    left: 0;
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    pointer-events: all; /* Enable interactions */
+    padding: 5px 10px; /* Add some padding for better clickable area */
+}
+
+.dots-icon {
+    cursor: pointer;
+    color: #ffd700;
+    padding: 5px;
+    z-index: 1001; /* Ensure it's above other elements */
+    pointer-events: all; /* Enable interactions */
+}
+
+.dots-icon i {
+    font-size: 20px;
+    pointer-events: all; /* Enable interactions */
+}
+
+.dots-dropdown {
+    position: absolute;
+    left: 35px; /* Adjust position relative to dots */
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #1f1f1f;
+    border: 1px solid #003366;
+    border-radius: 4px;
+    display: none;
+    z-index: 1002; /* Ensure dropdown is above dots */
+    min-width: 100px; /* Ensure dropdown has enough width */
+}
+
+.dots-dropdown.show {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 8px 16px;
+    cursor: pointer;
+    color: #fff;
+    transition: background-color 0.3s;
+}
+
+.dropdown-item:hover {
+    background-color: #003366;
+}
+
+.dropdown-item.edit:hover {
+    color: #4CAF50;
+}
+
+.dropdown-item.delete:hover {
+    color: #f44336;
+}
+
+/* Style for empty table message */
+.empty-table-message {
+    color: #ccc;
+    text-align: center;
+    padding: 20px;
+    font-size: 18px;
+    font-style: italic;
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width */
+    margin-top: 20px; /* Add space between table and message */
+}
+
+/* Add styles for the map container */
+#map {
+    width: 200%; /* Match the width of your buttons */
+    height: 300px; /* Adjust height as needed */
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+

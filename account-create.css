@@ -1,0 +1,420 @@
+/* Reset and Global Styles */
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Base Layout */
+html, body {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  place-items: center;
+  background: linear-gradient(45deg, #2c2c2c, #393939, #111111);
+  background-size: 400% 400%;
+  animation: gradientAnimation 15s ease infinite;
+  margin: 0;
+}
+
+body {
+  background-color: #2c2c2c;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Animations */
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Wrapper Styles */
+.wrapper {
+  overflow: hidden;
+  max-width: 390px;
+  background: #1f1f1f;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0px 20px 30px -10px #111;
+  flex: 1;
+}
+
+.wrapper .title-text {
+  display: flex;
+  width: 200%;
+}
+
+.wrapper .title {
+  width: 50%;
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
+  color: #ffd700;
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  animation: 3s pulse infinite ease-in-out;
+}
+
+/* Slide Controls */
+.wrapper .slide-controls {
+  position: relative;
+  display: flex;
+  height: 50px;
+  width: 100%;
+  overflow: hidden;
+  margin: 30px 0 10px 0;
+  border: 1px solid #444;
+  justify-content: space-between;
+  border-radius: 15px;
+}
+
+.slide-controls .slide {
+  height: 100%;
+  width: 100%;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  line-height: 48px;
+  cursor: pointer;
+  z-index: 1;
+  transition: all 0.6s ease;
+}
+
+.slide-controls label.signup {
+  color: #bbb;
+}
+
+.slide-controls .slider-tab {
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  left: 0;
+  z-index: 0;
+  border-radius: 15px;
+  background: -webkit-linear-gradient(left, #003366, #004080, #0059b3, #0073e6);
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Radio Controls */
+input[type="radio"] {
+  display: none;
+}
+
+#signup:checked ~ .slider-tab {
+  left: 50%;
+}
+
+#signup:checked ~ label.signup {
+  color: #ffd700;
+  cursor: default;
+  user-select: none;
+}
+
+#signup:checked ~ label.login {
+  color: #bbb;
+}
+
+#login:checked ~ label.signup {
+  color: #bbb;
+}
+
+#login:checked ~ label.login {
+  color: #ffd700;
+  cursor: default;
+  user-select: none;
+}
+
+/* Form Container */
+.wrapper .form-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.form-container .form-inner {
+  display: flex;
+  width: 200%;
+}
+
+.form-container .form-inner form {
+  width: 50%;
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Form Fields */
+.form-inner form .field {
+  height: 50px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.form-inner form .field input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  padding-left: 15px;
+  border-radius: 15px;
+  border: 1px solid #444;
+  border-bottom-width: 2px;
+  font-size: 17px;
+  background: #333;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.form-inner form .field input:focus {
+  border-color: #ffd700;
+}
+
+.form-inner form .field input::placeholder {
+  color: #999;
+  transition: all 0.3s ease;
+}
+
+form .field input:focus::placeholder {
+  color: #1a75ff;
+}
+
+/* Links */
+.form-inner form .pass-link {
+  margin-top: 5px;
+}
+
+.form-inner form .signup-link {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.form-inner form .pass-link a,
+.form-inner form .signup-link a {
+  color: #1a75ff;
+  text-decoration: none;
+}
+
+.form-inner form .pass-link a:hover,
+.form-inner form .signup-link a:hover {
+  text-decoration: underline;
+}
+
+/* Button Styles */
+form .btn {
+  height: 50px;
+  width: 100%;
+  border-radius: 15px;
+  position: relative;
+  overflow: hidden;
+}
+
+form .btn .btn-layer {
+  height: 100%;
+  width: 300%;
+  position: absolute;
+  left: -100%;
+  background: -webkit-linear-gradient(left, #003366, #004080, #0059b3, #0073e6);
+  border-radius: 15px;
+  transition: all 0.4s ease;
+}
+
+form .btn:hover .btn-layer {
+  left: 0;
+}
+
+form .btn input[type="submit"] {
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  position: relative;
+  background: none;
+  border: none;
+  color: #fff;
+  padding-left: 0;
+  border-radius: 15px;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Header Styles */
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+header h1 {
+  font-size: 36px;
+  color: #ffd700;
+  margin-bottom: 10px;
+}
+
+/* Main Content */
+main {
+  width: 100%;
+  max-width: 900px;
+}
+
+/* Section Styles */
+section {
+  background: #1f1f1f;
+  padding: 20px 30px;
+  border-radius: 15px;
+  box-shadow: 0px 20px 30px -10px #111;
+  margin-bottom: 20px;
+}
+
+section h2 {
+  font-size: 24px;
+  color: #ffd700;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Form Elements */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+form label {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+form input[type="text"],
+form textarea,
+form select {
+  background: #333;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 10px 15px;
+  color: #fff;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+form input[type="file"] {
+  background: #333;
+  border: 1px solid #444;
+  color: #bbb;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+form textarea {
+  resize: none;
+  height: 80px;
+}
+
+form button {
+  background: linear-gradient(to right, #003366, #004080, #0059b3, #0073e6);
+  color: #fff;
+  border: none;
+  border-radius: 15px;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.4s ease;
+}
+
+form button:hover {
+  background: linear-gradient(to right, #0059b3, #0073e6, #008cff, #33adff);
+}
+
+/* Records List */
+#records-list ul {
+  list-style: none;
+  margin-top: 20px;
+  padding: 0;
+}
+
+#records-list li {
+  background: #333;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  color: #ddd;
+  border: 1px solid #444;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  margin-top: auto;
+  color: #777;
+}
+
+footer p {
+  font-size: 14px;
+}
+
+/* Welcome Bar */
+.welcome-bar div {
+  height: 4px;
+  background-color: red;
+}
+
+/* Container Animation */
+.container {
+  opacity: 0;
+  transform: translateX(-100px);
+  animation: slideInFromLeft 0.8s ease-out forwards;
+}
+
+/* Edit page specific styles */
+#edit-record-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#edit-record-form button {
+    margin-top: 10px;
+}
+
+#cancel-edit {
+    background: linear-gradient(to right, #666, #888) !important;
+    margin-top: 10px;
+}
+
+#cancel-edit:hover {
+    background: linear-gradient(to right, #555, #777) !important;
+}
+
+/* Add some spacing between buttons */
+#edit-record-form button + button {
+    margin-top: 10px;
+}
+
+
+
+
+
+
+
+
+

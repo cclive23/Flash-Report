@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Record</title>
+    <link rel="stylesheet" href="account-create.css">
+</head>
+<body>
+<header>
+    <h1>Edit Record</h1>
+</header>
+<main>
+    <section>
+        <h2>Edit Record Details</h2>
+        <form id="edit-record-form">
+            <input type="hidden" id="record-no" name="record-no">
+            
+            <label for="record-type">Select Record Type:</label>
+            <select id="record-type" name="record-type" required>
+                <option value="red-flag">Red-Flag</option>
+                <option value="intervention">Intervention</option>
+            </select>
+
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" placeholder="Enter title" required>
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" placeholder="Enter description" required></textarea>
+
+            <label for="images">Add Images:</label>
+            <input type="file" id="images" name="images" accept="image/*" multiple>
+
+            <label for="videos">Add Videos:</label>
+            <input type="file" id="videos" name="videos" accept="video/*" multiple>
+
+            <label for="geolocation">Geolocation (Lat, Long):</label>
+            <input type="text" id="geolocation" name="geolocation" placeholder="e.g., 12.3456, -78.9012" required>
+
+            <button type="submit" id="submit-record">Update Record</button>
+            <button type="button" id="cancel-edit" onclick="window.location.href='user.html'">Cancel</button>
+        </form>
+    </section>
+</main>
+
+<script>
+// Load and populate form with existing record data
+document.addEventListener('DOMContentLoaded', function() {
+    const recordNo = new URLSearchParams(window.location.search).get('recordNo');
+    if (!recordNo) {
+        alert('No record specified for editing');
+        window.location.href = 'user.html';
+        return;
+    }
+
+    const records = JSON.parse(localStorage.getItem('records') || '[]');
+    const record = records.find(r => r.recordNo === recordNo);
+    
+    if (!record) {
+        alert('Record not found');
+        window.location.href = 'user.html';
+        return;
+    }
+
+    // Populate form fields
+    document.getElementById('record-no').value = record.recordNo;
+    document.getElementById('record-type').value = record.type;
+    document.getElementById('title').value = record.title;
+    document.getElementById('geolocation').value = record.geolocation;
+});
+
+// Handle form submission
+document.getElementById('edit-record-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const recordNo = document.getElementById('record-no').value;
+    const updatedRecord = {
+        recordNo: recordNo,
+        title: document.getElementById('title').value,
+        geolocation: document.getElementById('geolocation').value,
+        type: document.getElementById('record-type').value,
+        status: 'Pending' // You might want to preserve the existing status instead
+    };
+    
+    // Update record in localStorage
+    let records = JSON.parse(localStorage.getItem('records') || '[]');
+    const index = records.findIndex(r => r.recordNo === recordNo);
+    
+    if (index !== -1) {
+        records[index] = updatedRecord;
+        localStorage.setItem('records', JSON.stringify(records));
+        alert('Record updated successfully!');
+        window.location.href = 'user.html';
+    } else {
+        alert('Error updating record');
+    }
+});
+</script>
+
+</body>
+</html> 
