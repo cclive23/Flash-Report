@@ -37,22 +37,23 @@ function loadRecords() {
     const tbody = document.querySelector('.records-table tbody');
     const tableContainer = document.querySelector('.table-container');
     
-    console.log('All records:', records); // Debug logging
-    console.log('Current user:', userEmail); // Debug logging
-    
-    // Clear existing records
+    // Clear existing content
     tbody.innerHTML = '';
+    
+    // Remove existing no-records message if it exists
+    const existingMessage = document.querySelector('.no-records-message');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
     
     // Filter records for current user
     const userRecords = records.filter(record => record.userEmail === userEmail);
-    console.log('User records:', userRecords); // Debug logging
     
     if (userRecords.length === 0) {
-        const emptyMessage = document.createElement('div');
-        emptyMessage.className = 'empty-table-message';
-        emptyMessage.textContent = 'No records created yet';
-        tableContainer.appendChild(emptyMessage);
-        emptyMessage.style.display = 'block';
+        const noRecordsMessage = document.createElement('div');
+        noRecordsMessage.className = 'no-records-message';
+        noRecordsMessage.textContent = 'No records created yet';
+        tableContainer.appendChild(noRecordsMessage);
     } else {
         userRecords.forEach(record => {
             const tr = document.createElement('tr');
@@ -325,6 +326,69 @@ document.querySelector('.side-menu li.logout').addEventListener('click', functio
         window.location.href = 'index.html';
     }
 });
+
+// Add event listener for search functionality
+document.querySelector('.search-container button').addEventListener('click', function(e) {
+    e.preventDefault();
+    searchRecord();
+});
+
+// Add event listener for Enter key in search input
+document.querySelector('.search-container input').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        searchRecord();
+    }
+});
+
+function searchRecord() {
+    const searchInput = document.querySelector('.search-container input').value.trim();
+    const userEmail = sessionStorage.getItem('userEmail');
+    const records = JSON.parse(localStorage.getItem('records') || '[]');
+    const tableContainer = document.querySelector('.table-container');
+    const tbody = document.querySelector('.records-table tbody');
+    
+    // Clear existing table content
+    tbody.innerHTML = '';
+    
+    // Remove existing no-records message if it exists
+    const existingMessage = document.querySelector('.no-records-message');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+    
+    if (!searchInput) {
+        // If search is empty, show all user's records
+        loadRecords();
+        return;
+    }
+    
+    // Filter records by record number and user email
+    const filteredRecords = records.filter(record => 
+        record.recordNo === searchInput && record.userEmail === userEmail
+    );
+    
+    if (filteredRecords.length === 0) {
+        // Display no records found message
+        const noRecordsMessage = document.createElement('div');
+        noRecordsMessage.className = 'no-records-message';
+        noRecordsMessage.textContent = `No record found with number: ${searchInput}`;
+        tableContainer.appendChild(noRecordsMessage);
+    } else {
+        // Display found records
+        filteredRecords.forEach(record => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${record.recordNo}</td>
+                <td>${record.title}</td>
+                <td>${record.geolocation}</td>
+                <td>${record.type}</td>
+                <td>${record.status}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+}
 
 
 
