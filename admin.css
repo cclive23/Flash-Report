@@ -382,38 +382,32 @@ body {
     overflow-x: auto;
 }
 
+/* Update status select styling */
 .status-update {
-    padding: 6px;
+    width: 100%;
+    padding: 8px;
     border-radius: 4px;
-    background-color: #003366;
+    background-color: #1f1f1f;
     color: #fff;
-    border: 1px solid #004080;
+    border: 1px solid #003366;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .status-update:hover {
-    background-color: #004080;
+    background-color: #003366;
+    border-color: #ffd700;
 }
 
-/* Add styles for different status colors */
-.records-table td:nth-child(5) {
-    font-weight: bold;
+.status-update option {
+    background-color: #1f1f1f;
+    color: #fff;
+    padding: 8px;
 }
 
-.records-table td[data-status="Pending"] {
-    color: #ffd700;
-}
-
-.records-table td[data-status="Under Investigation"] {
-    color: #ff9800;
-}
-
-.records-table td[data-status="Resolved"] {
-    color: #4CAF50;
-}
-
-.records-table td[data-status="Rejected"] {
-    color: #f44336;
+/* Remove the old status colors since we're using select now */
+.records-table td[data-status] {
+    padding: 0; /* Remove padding to fit select better */
 }
 
 /* Table styling */
@@ -485,4 +479,15 @@ body {
 
 .records-table tbody tr.highlight-green:hover {
     background-color: rgba(0, 255, 0, 0.4) !important;
+}
+
+.no-records-message {
+    text-align: center;
+    padding: 20px;
+    color: #ffd700;
+    font-size: 18px;
+    background-color: #1f1f1f;
+    border: 1px solid #003366;
+    border-radius: 4px;
+    margin-top: 20px;
 }

@@ -107,36 +107,55 @@ function sortRecords(criteria) {
 function loadFilteredRecords() {
     const records = JSON.parse(localStorage.getItem('records') || '[]');
     const statusFilter = document.getElementById('statusFilter').value;
-    const tbody = document.querySelector('.records-table tbody');
+    const tableContainer = document.querySelector('.records-table-container');
     
-    // Clear existing records
-    tbody.innerHTML = '';
-    
-    // Filter records based on selected status
     const filteredRecords = statusFilter === 'all' 
         ? records 
-        : records.filter(record => record.status === statusFilter);
+        : records.filter(record => record.status.toLowerCase() === statusFilter.toLowerCase());
     
-    // Populate table with filtered records
-    filteredRecords.forEach(record => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${record.recordNo}</td>
-            <td>${record.title}</td>
-            <td>${record.geolocation}</td>
-            <td>${record.type}</td>
-            <td>${record.status}</td>
-            <td>
-                <select class="status-update" data-record-no="${record.recordNo}">
-                    <option value="">Update Status</option>
-                    <option value="Under Investigation">Under Investigation</option>
-                    <option value="Resolved">Resolved</option>
-                    <option value="Rejected">Rejected</option>
-                </select>
-            </td>
-        `;
-        tbody.appendChild(tr);
-    });
+    // Always show the table structure
+    tableContainer.innerHTML = `
+        <table class="records-table">
+            <thead>
+                <tr>
+                    <th>Record No.</th>
+                    <th>Title</th>
+                    <th>Geolocation</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        ${filteredRecords.length === 0 ? 
+            `<div class="no-records-message">
+                No ${statusFilter === 'all' ? '' : statusFilter.toLowerCase()} records found
+            </div>` : ''
+        }
+    `;
+    
+    if (filteredRecords.length > 0) {
+        const tbody = tableContainer.querySelector('.records-table tbody');
+        
+        filteredRecords.forEach(record => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${record.recordNo}</td>
+                <td>${record.title}</td>
+                <td>${record.geolocation}</td>
+                <td>${record.type}</td>
+                <td>
+                    <select class="status-update" data-record-no="${record.recordNo}">
+                        <option value="Pending" ${record.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                        <option value="Under Investigation" ${record.status === 'Under Investigation' ? 'selected' : ''}>Under Investigation</option>
+                        <option value="Resolved" ${record.status === 'Resolved' ? 'selected' : ''}>Resolved</option>
+                        <option value="Rejected" ${record.status === 'Rejected' ? 'selected' : ''}>Rejected</option>
+                    </select>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
 }
 
 // Function to update record status
@@ -145,32 +164,66 @@ function updateRecordStatus(recordNo, newStatus) {
     const recordIndex = records.findIndex(r => r.recordNo === recordNo);
     
     if (recordIndex !== -1) {
-        records[recordIndex].status = newStatus;
+        const row = document.querySelector(`[data-record-no="${recordNo}"]`).closest('tr');
         
-        // Add notification to the record
+        // Add highlight class based on status
+        row.className = ''; // Clear existing classes
+        if (newStatus === 'Resolved') {
+            row.classList.add('highlight-green');
+        } else if (newStatus === 'Rejected') {
+            row.classList.add('highlight-red');
+        }
+        
+        records[recordIndex].status = newStatus;
+        records[recordIndex].lastUpdated = new Date().toISOString();
+        
+        // Add notification
         if (!records[recordIndex].notifications) {
             records[recordIndex].notifications = [];
         }
         
         records[recordIndex].notifications.push({
-            message: `Your record status has been updated to: ${newStatus}`,
+            message: `Record status updated to: ${newStatus}`,
             timestamp: new Date().toISOString(),
             read: false
         });
         
         localStorage.setItem('records', JSON.stringify(records));
-        loadFilteredRecords(); // Refresh the table
+        
+        // Show notification
+        showNotification(`Record status updated to ${newStatus}`);
+        
+        // Refresh the table while maintaining current filter
+        loadFilteredRecords();
     }
 }
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
+    // Get admin name from sessionStorage
+    const adminName = sessionStorage.getItem('userName') || 'Admin';
+    
+    // Update the welcome message
+    const welcomeMessage = document.querySelector('.welcome-bar h2');
+    if (welcomeMessage) {
+        welcomeMessage.textContent = `Hello, ${adminName}`;
+    }
+
+    // Check if user is logged in and has admin role
+    const userRole = sessionStorage.getItem('userRole');
+    if (!userRole || userRole !== 'admin') {
+        alert('Unauthorized access. Please log in as an admin.');
+        window.location.href = 'account.html';
+        return;
+    }
+
+    // Load filtered records
     loadFilteredRecords();
     
     // Add filter change listener
     document.getElementById('statusFilter').addEventListener('change', loadFilteredRecords);
     
-    // Add status update listener using event delegation
+    // Add status update listener
     document.querySelector('.records-table').addEventListener('change', (e) => {
         if (e.target.classList.contains('status-update')) {
             const newStatus = e.target.value;
@@ -180,7 +233,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (confirm(`Are you sure you want to update this record's status to ${newStatus}?`)) {
                     updateRecordStatus(recordNo, newStatus);
                 } else {
-                    e.target.value = ''; // Reset select if cancelled
+                    // Reset select to previous value if cancelled
+                    const record = JSON.parse(localStorage.getItem('records') || '[]')
+                        .find(r => r.recordNo === recordNo);
+                    if (record) {
+                        e.target.value = record.status;
+                    }
                 }
             }
         }
