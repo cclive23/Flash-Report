@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="animated-background"></div>
+    <!-- Side menu -->
+    <div class="side-menu">
+        <ul>
+            <li><i class="fas fa-tachometer-alt"></i>Dashboard</li>
+            <li><i class="fas fa-user"></i>Account</li>
+            <li><i class="fas fa-cog"></i>Settings</li>
+            <li><i class="fas fa-envelope"></i>Contact</li>
+            <li><i class="fas fa-question-circle"></i>Help    </li>
+            <li class="logout"><i class="fas fa-sign-out-alt"></i>Logout</li>
+        </ul>
+    </div>
+
+    <!-- Navigation bar -->
+    <nav class="welcome-bar">
+        <div class="hamburger-menu">
+            <div class="one"></div>
+            <div class="two"></div>
+            <div class="three"></div>
+        </div>
+        <h2>Hello, Mr. Admin</h2>
+        <div class="logo"><h2>Flash Report</h2></div>
+    </nav>
+
+    <!-- Add Manage Records Section -->
+    <div class="manage-records-section">
+        <div class="records-header">
+            <h2>Manage Records</h2>
+            <div class="filter-container">
+                <select id="statusFilter">
+                    <option value="all">All Status</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Under Investigation">Under Investigation</option>
+                    <option value="Resolved">Resolved</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
+            </div>
+        </div>
+        <div class="records-table-container">
+            <table class="records-table">
+                <thead>
+                    <tr>
+                        <th>Record No.</th>
+                        <th>Title</th>
+                        <th>Geolocation</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Records will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
