@@ -624,3 +624,14 @@ transform: scale(1.1);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+.no-records-message {
+    text-align: center;
+    padding: 20px;
+    color: #ffd700;
+    font-size: 18px;
+    background-color: #1f1f1f;
+    border: 1px solid #003366;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
