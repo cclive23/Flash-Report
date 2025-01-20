@@ -197,12 +197,10 @@ document.querySelector('.edit-record').addEventListener('click', function(e) {
                     const updatedRecords = records.filter(record => record.recordNo !== recordNo);
                     localStorage.setItem('records', JSON.stringify(updatedRecords));
                     
-                    // If this was the last record, reset table position
-                    if (updatedRecords.length === 0) {
-                        document.querySelector('.table-container').classList.remove('moved');
-                    }
-                    
-                    loadRecords();
+                    showNotification('Record deleted successfully');
+                    setTimeout(() => {
+                        location.reload(); // Force page reload
+                    }, 1000);
                 }
                 dropdown.classList.remove('show');
             });

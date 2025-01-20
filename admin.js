@@ -167,7 +167,7 @@ function loadFilteredRecords() {
     }
 }
 
-// Add delete record function
+// Update the deleteRecord function
 function deleteRecord(recordNo) {
     if (confirm('Are you sure you want to delete this record? This action cannot be undone.')) {
         const records = JSON.parse(localStorage.getItem('records') || '[]');
@@ -178,7 +178,7 @@ function deleteRecord(recordNo) {
     }
 }
 
-// Update the status update function to force reload
+// Update the status update function
 function updateRecordStatus(recordNo, newStatus) {
     const records = JSON.parse(localStorage.getItem('records') || '[]');
     const recordIndex = records.findIndex(r => r.recordNo === recordNo);
@@ -186,18 +186,6 @@ function updateRecordStatus(recordNo, newStatus) {
     if (recordIndex !== -1) {
         records[recordIndex].status = newStatus;
         records[recordIndex].lastUpdated = new Date().toISOString();
-        
-        // Add notification
-        if (!records[recordIndex].notifications) {
-            records[recordIndex].notifications = [];
-        }
-        
-        records[recordIndex].notifications.push({
-            message: `Record status updated to: ${newStatus}`,
-            timestamp: new Date().toISOString(),
-            read: false
-        });
-        
         localStorage.setItem('records', JSON.stringify(records));
         showNotification(`Record status updated to ${newStatus}`);
         
