@@ -632,8 +632,8 @@ transform: scale(1.1);
     background-color: #1f1f1f;
     border: 1px solid #003366;
     border-radius: 4px;
-    margin-top: 50px; /* Increased margin-top */
-    width: 100%; /* Ensure full width */
+    margin-top: 70px; /* Increased margin-top */
+    width: 90%; /* Ensure full width */
     display: flex; /* Use flexbox for centering */
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
