@@ -281,12 +281,29 @@ document.querySelector('.location-display').addEventListener('click', function(e
 
 // Add click handler for create record button
 document.querySelector('.create-record').addEventListener('click', function(e) {
+    e.preventDefault(); // Prevent default navigation
+    
     const userRole = sessionStorage.getItem('userRole');
     if (userRole !== 'user' && userRole !== 'admin') {
-        e.preventDefault();
         alert('Please log in to create a record.');
         window.location.href = 'account.html';
+        return;
     }
+    
+    // Check if location has been copied
+    if (!isLocationCopied) {
+        alert('Please copy your location first by clicking on the coordinates.');
+        // Add a visual hint by adding a temporary highlight class to location display
+        const locationDisplay = document.querySelector('.location-display');
+        locationDisplay.style.backgroundColor = 'rgba(255, 215, 0, 0.2)'; // Subtle gold highlight
+        setTimeout(() => {
+            locationDisplay.style.backgroundColor = ''; // Remove highlight after 1.5s
+        }, 1500);
+        return;
+    }
+    
+    // If location is copied and user is logged in, proceed to create page
+    window.location.href = 'createPage.html';
 });
 
 document.addEventListener('DOMContentLoaded', () => {
