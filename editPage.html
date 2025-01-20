@@ -9,6 +9,7 @@
 <body>
 <header>
     <h1>Edit Record</h1>
+    <a href="user.html" class="close-btn">&times;</a>
 </header>
 <main>
     <section>
@@ -38,64 +39,11 @@
             <input type="text" id="geolocation" name="geolocation" placeholder="e.g., 12.3456, -78.9012" required>
 
             <button type="submit" id="submit-record">Update Record</button>
-            <button type="button" id="cancel-edit" onclick="window.location.href='user.html'">Cancel</button>
+            <button type="button" class="cancel-btn" onclick="window.location.href='user.html'">Cancel</button>
         </form>
     </section>
 </main>
 
-<script>
-// Load and populate form with existing record data
-document.addEventListener('DOMContentLoaded', function() {
-    const recordNo = new URLSearchParams(window.location.search).get('recordNo');
-    if (!recordNo) {
-        alert('No record specified for editing');
-        window.location.href = 'user.html';
-        return;
-    }
-
-    const records = JSON.parse(localStorage.getItem('records') || '[]');
-    const record = records.find(r => r.recordNo === recordNo);
-    
-    if (!record) {
-        alert('Record not found');
-        window.location.href = 'user.html';
-        return;
-    }
-
-    // Populate form fields
-    document.getElementById('record-no').value = record.recordNo;
-    document.getElementById('record-type').value = record.type;
-    document.getElementById('title').value = record.title;
-    document.getElementById('geolocation').value = record.geolocation;
-});
-
-// Handle form submission
-document.getElementById('edit-record-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const recordNo = document.getElementById('record-no').value;
-    const updatedRecord = {
-        recordNo: recordNo,
-        title: document.getElementById('title').value,
-        geolocation: document.getElementById('geolocation').value,
-        type: document.getElementById('record-type').value,
-        status: 'Pending' // You might want to preserve the existing status instead
-    };
-    
-    // Update record in localStorage
-    let records = JSON.parse(localStorage.getItem('records') || '[]');
-    const index = records.findIndex(r => r.recordNo === recordNo);
-    
-    if (index !== -1) {
-        records[index] = updatedRecord;
-        localStorage.setItem('records', JSON.stringify(records));
-        alert('Record updated successfully!');
-        window.location.href = 'user.html';
-    } else {
-        alert('Error updating record');
-    }
-});
-</script>
-
+<script src="edit.js"></script>
 </body>
 </html> 

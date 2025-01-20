@@ -113,7 +113,7 @@ function loadFilteredRecords() {
         ? records 
         : records.filter(record => record.status.toLowerCase() === statusFilter.toLowerCase());
     
-    // Update table structure with delete button column
+    // Update table structure
     tableContainer.innerHTML = `
         <table class="records-table">
             <thead>
@@ -140,6 +140,9 @@ function loadFilteredRecords() {
         
         filteredRecords.forEach(record => {
             const tr = document.createElement('tr');
+            tr.className = record.status.toLowerCase() === 'resolved' ? 'highlight-green' : 
+                          record.status.toLowerCase() === 'rejected' ? 'highlight-red' : '';
+            
             tr.innerHTML = `
                 <td>${record.recordNo}</td>
                 <td>${record.title}</td>
@@ -167,18 +170,7 @@ function loadFilteredRecords() {
     }
 }
 
-// Update the deleteRecord function
-function deleteRecord(recordNo) {
-    if (confirm('Are you sure you want to delete this record? This action cannot be undone.')) {
-        const records = JSON.parse(localStorage.getItem('records') || '[]');
-        const updatedRecords = records.filter(r => r.recordNo !== recordNo);
-        localStorage.setItem('records', JSON.stringify(updatedRecords));
-        showNotification('Record deleted successfully');
-        location.reload(); // Force page reload
-    }
-}
-
-// Update the status update function
+// Update the updateRecordStatus function
 function updateRecordStatus(recordNo, newStatus) {
     const records = JSON.parse(localStorage.getItem('records') || '[]');
     const recordIndex = records.findIndex(r => r.recordNo === recordNo);
@@ -189,10 +181,21 @@ function updateRecordStatus(recordNo, newStatus) {
         localStorage.setItem('records', JSON.stringify(records));
         showNotification(`Record status updated to ${newStatus}`);
         
-        // Force page reload after short delay
-        setTimeout(() => {
-            location.reload();
-        }, 1000);
+        // Reload the page to reflect changes
+        loadFilteredRecords();
+    }
+}
+
+// Update deleteRecord function
+function deleteRecord(recordNo) {
+    if (confirm('Are you sure you want to delete this record? This action cannot be undone.')) {
+        const records = JSON.parse(localStorage.getItem('records') || '[]');
+        const updatedRecords = records.filter(r => r.recordNo !== recordNo);
+        localStorage.setItem('records', JSON.stringify(updatedRecords));
+        showNotification('Record deleted successfully');
+        
+        // Immediately reload the page
+        window.location.reload();
     }
 }
 

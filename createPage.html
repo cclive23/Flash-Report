@@ -9,6 +9,7 @@
 <body>
 <header>
     <h1>Create a Record</h1>
+    <a href="user.html" class="close-btn">&times;</a>
 </header>
 <main>
     <!-- Form to Create Red-Flag or Intervention Record -->
@@ -54,14 +55,19 @@ document.getElementById('create-record-form').addEventListener('submit', functio
         return;
     }
     
+    const currentDate = new Date().toISOString();
+    
     // Get form values
     const recordData = {
         recordNo: generateRecordNumber(),
         title: document.getElementById('title').value,
+        description: document.getElementById('description').value,
         geolocation: document.getElementById('geolocation').value,
         type: document.getElementById('record-type').value,
         status: 'Pending',
-        userEmail: userEmail // Add the user's email to the record
+        userEmail: userEmail,
+        createdAt: currentDate,
+        lastUpdated: currentDate
     };
     
     // Store record in localStorage
@@ -74,7 +80,6 @@ document.getElementById('create-record-form').addEventListener('submit', functio
 });
 
 function generateRecordNumber() {
-    // Get existing records to determine next number
     const existingRecords = JSON.parse(localStorage.getItem('records') || '[]');
     const nextNum = (existingRecords.length + 1).toString().padStart(3, '0');
     return nextNum;

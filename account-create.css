@@ -260,6 +260,7 @@ form .btn input[type="submit"] {
 header {
   text-align: center;
   margin-bottom: 30px;
+  position: relative;
 }
 
 header h1 {
@@ -408,6 +409,56 @@ footer p {
 /* Add some spacing between buttons */
 #edit-record-form button + button {
     margin-top: 10px;
+}
+
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    color: #ffd700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-button:hover {
+    color: #ff4444;
+}
+
+/* Close button styles */
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    color: #ffd700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #ff4444;
+}
+
+/* Cancel button styles */
+.cancel-btn {
+    height: 50px;
+    width: 100%;
+    border-radius: 15px;
+    background: linear-gradient(to right, #666, #888);
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+}
+
+.cancel-btn:hover {
+    background: linear-gradient(to right, #555, #777);
 }
 
 

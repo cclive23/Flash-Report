@@ -99,6 +99,59 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Update the edit record functionality
+function handleEditRecord(recordNo) {
+    const records = JSON.parse(localStorage.getItem('records') || '[]');
+    const record = records.find(r => r.recordNo === recordNo);
+    
+    if (record.status !== 'Pending') {
+        alert('Only records with Pending status can be edited.');
+        return;
+    }
+    
+    // Redirect to edit page with record number
+    window.location.href = `editPage.html?recordNo=${recordNo}`;
+}
+
+// Update loadRecords function to ensure consistent data display
+function loadRecords() {
+    const records = JSON.parse(localStorage.getItem('records') || '[]');
+    const userEmail = sessionStorage.getItem('userEmail');
+    const tbody = document.querySelector('.records-table tbody');
+    const tableContainer = document.querySelector('.table-container');
+    
+    // Clear existing content
+    tbody.innerHTML = '';
+    
+    // Remove existing no-records message if it exists
+    const existingMessage = document.querySelector('.no-records-message');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+    
+    // Filter records for current user
+    const userRecords = records.filter(record => record.userEmail === userEmail);
+    
+    if (userRecords.length === 0) {
+        const noRecordsMessage = document.createElement('div');
+        noRecordsMessage.className = 'no-records-message';
+        noRecordsMessage.textContent = 'No records created yet';
+        tableContainer.appendChild(noRecordsMessage);
+    } else {
+        userRecords.forEach(record => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${record.recordNo}</td>
+                <td>${record.title}</td>
+                <td>${record.geolocation}</td>
+                <td>${record.type}</td>
+                <td>${record.status}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+}
+
+// Update the edit record functionality
 document.querySelector('.edit-record').addEventListener('click', function(e) {
     e.preventDefault();
     
@@ -185,24 +238,14 @@ document.querySelector('.edit-record').addEventListener('click', function(e) {
             dropdown.querySelector('.edit').addEventListener('click', function(event) {
                 event.stopPropagation();
                 const recordNo = row.querySelector('td:nth-child(1)').textContent;
-                // Redirect to edit page with record number
-                window.location.href = `editPage.html?recordNo=${recordNo}`;
+                handleEditRecord(recordNo);
                 dropdown.classList.remove('show');
             });
             
             dropdown.querySelector('.delete').addEventListener('click', function(event) {
                 event.stopPropagation();
                 const recordNo = row.querySelector('td:nth-child(1)').textContent;
-                if (confirm('Are you sure you want to delete this record?')) {
-                    const records = JSON.parse(localStorage.getItem('records') || '[]');
-                    const updatedRecords = records.filter(record => record.recordNo !== recordNo);
-                    localStorage.setItem('records', JSON.stringify(updatedRecords));
-                    
-                    showNotification('Record deleted successfully');
-                    setTimeout(() => {
-                        location.reload(); // Force page reload
-                    }, 1000);
-                }
+                deleteRecord(recordNo);
                 dropdown.classList.remove('show');
             });
             
@@ -387,6 +430,18 @@ function searchRecord() {
             `;
             tbody.appendChild(tr);
         });
+    }
+}
+
+// Update deleteRecord function
+function deleteRecord(recordNo) {
+    if (confirm('Are you sure you want to delete this record? This action cannot be undone.')) {
+        const records = JSON.parse(localStorage.getItem('records') || '[]');
+        const updatedRecords = records.filter(r => r.recordNo !== recordNo);
+        localStorage.setItem('records', JSON.stringify(updatedRecords));
+        
+        // Immediately reload the page
+        window.location.reload();
     }
 }
 
