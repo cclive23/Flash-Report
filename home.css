@@ -10,7 +10,6 @@ body {
 .home {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
     padding: 20px 40px;
     color: white;
     gap: 400px;
